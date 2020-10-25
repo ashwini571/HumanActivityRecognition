@@ -8,16 +8,17 @@ Created on Sat Oct 24 20:09:25 2020
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 #1 Reading Dataset
 df_train = pd.read_csv('train.csv')
 df_test = pd.read_csv('test.csv')
 
 X_train = df_train.iloc[:,:-1]
-y_train = df_train.iloc[:,:-1]
+y_train = df_train['Activity']
 
 X_test = df_test.iloc[:,:-1]
-y_test = df_test.iloc[:,:-1]
+y_test = df_test['Activity']
 # Removing subjects col
 X_train.drop(['subject'], axis=1, inplace =True)
 X_test.drop(['subject'], axis=1, inplace = True)
@@ -40,20 +41,34 @@ X_train.columns = cols
 X_test.columns = cols
 
 
-
 #3 Dataset Analysis
-x = ['Nuclear', 'Hydro', 'Gas', 'Oil', 'Coal', 'Biofuel']
-energy = [5, 6, 15, 22, 24, 8]
+# Count vs activity
+bars = y_train.value_counts(sort=False)
 
-x_pos = [i for i, _ in enumerate(x)]
-
-plt.bar(x_pos, energy, color='green')
-plt.xlabel("Energy Source")
-plt.ylabel("Energy Output (GJ)")
-plt.title("Energy output from various fuel sources")
-
-plt.xticks(x_pos, x)
-
+fig, ax = plt.subplots(figsize =(16, 9)) 
+ax.barh(bars.index, bars)
+# Add annotation to bars 
+for i in ax.patches: 
+    plt.text(i.get_width()+0.2, i.get_y()+0.5,  
+             str(round((i.get_width()), 2)), 
+             fontsize = 10, fontweight ='bold', 
+             color ='grey') 
+plt.xlabel("Count")
+plt.ylabel("Activity")
+plt.title("Count vs Activity")
 plt.show()
+
+
+# tBodyAccMagmean vs Activities
+sns.boxplot(x = y_train, y = "tBodyAccMagmean", showfliers = False, data = X_train)
+plt.axhline(y = -0.65, linestyle = "--")
+plt.axhline(y = 0, linestyle = "--")
+plt.title("Box plot of tBodyAccMagmean", fontsize = 15)
+plt.ylabel("Accelerator Body Mean", fontsize = 15)
+plt.xlabel("Activity Name", fontsize = 15)
+plt.tick_params(labelsize = 15)
+plt.xticks(rotation = 40)
+plt.show()
+
 
 
