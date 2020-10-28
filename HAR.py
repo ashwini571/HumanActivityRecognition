@@ -4,7 +4,6 @@ Created on Sat Oct 24 20:09:25 2020
 
 @author: Ashwini Ojha
 """
-
 import pandas as pd
 import numpy as np
 from sklearn.impute import SimpleImputer
@@ -17,6 +16,9 @@ from sklearn.metrics import plot_confusion_matrix
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import LabelEncoder
+from sklearn.svm import SVC
+from sklearn.svm import LinearSVC
+
  
 #1 Reading Dataset
 df_train = pd.read_csv('train.csv')
@@ -95,7 +97,6 @@ def plot_tSNE(p,l):
     plt.title("TSNE Plot, Perplexity: "+str(p))
     plt.show()
 
-
 #4 ML Models
 def plot_cf(clf,predicted):
     plot_confusion_matrix(clf,X_test, y_test,display_labels = ["Laying","Sitting","Standing","Walking","Walking_Downstairs","Walking_Upstairs"])  
@@ -106,14 +107,14 @@ def print_performance(clf):
     train_score = clf.score(X_train,y_train)
     test_score = clf.score(X_test,y_test)
     # Accuracy
-    print('---------------------')
+    print('---------------------------------')
     print('|      Accuracy (Train Set)     |')
-    print('---------------------')
+    print('---------------------------------')
     print(str(train_score)+"%\n")
-    print('---------------------')
+    print('--------------------------------')
     print('|      Accuracy (Test Set)     |')
-    print('---------------------')
-    print(str(train_score)+"%\n")    
+    print('--------------------------------')
+    print(str(test_score)+"%\n")    
     
     # Precision, Recall, F1-score
     precision, recall, fscore, support = score(y_test, predicted,average='macro')
@@ -132,8 +133,20 @@ def print_performance(clf):
     
     # Confusion Matrix
     plot_cf(clf,predicted)
-    
+
 # Logistic Regression
-clf_lr = LogisticRegression(multi_class='ovr', max_iter=10000)
-clf_lr.fit(X_train,y_train)
+    
+clf_lr = LogisticRegression(multi_class='ovr', max_iter=1000)
+clf_lr.fit(X_train,y_train.values.flatten())
 print_performance(clf_lr)
+
+# RBF SVM
+clf_rbf = SVC()
+clf_rbf.fit(X_train, y_train.values.flatten())
+print_performance(clf_rbf)
+
+#Linear SVM
+clf_linear_svm = LinearSVC()
+clf_linear_svm.fit(X_train, y_train.values.flatten())
+print_performance(clf_linear_svm)
+
