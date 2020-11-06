@@ -137,7 +137,6 @@ def print_performance(clf):
     plot_cf(clf,predicted)
 
 # Logistic Regression
-    
 clf_lr = LogisticRegression(multi_class='ovr', max_iter=1000)
 clf_lr.fit(X_train,y_train.values.flatten())
 print_performance(clf_lr)
@@ -153,7 +152,4 @@ clf_linear_svm.fit(X_train, y_train.values.flatten())
 print_performance(clf_linear_svm)
 
 
-
-
-#----------------------------------------------Deep Learning approach---------------------------------------
 
