@@ -18,7 +18,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
-
+from sklearn import tree
 
 #-----------------------------------Machine Learning Approach----------------------------------------
  
@@ -151,5 +151,10 @@ clf_linear_svm = LinearSVC()
 clf_linear_svm.fit(X_train, y_train.values.flatten())
 print_performance(clf_linear_svm)
 
-
-
+#Decision Tree
+clf_dt = tree.DecisionTreeClassifier(max_depth = 10)
+clf_dt.fit(X_train,y_train.values.flatten())
+print_performance(clf_dt)
+plt.figure(figsize=(20,10))
+#Tree Plot
+tree.plot_tree(clf_dt,class_names=activities,fontsize=6)
