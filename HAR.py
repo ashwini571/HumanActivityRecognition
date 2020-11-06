@@ -19,6 +19,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
 
+
+#-----------------------------------Machine Learning Approach----------------------------------------
  
 #1 Reading Dataset
 df_train = pd.read_csv('train.csv')
@@ -149,4 +151,9 @@ print_performance(clf_rbf)
 clf_linear_svm = LinearSVC()
 clf_linear_svm.fit(X_train, y_train.values.flatten())
 print_performance(clf_linear_svm)
+
+
+
+
+#----------------------------------------------Deep Learning approach---------------------------------------
 
