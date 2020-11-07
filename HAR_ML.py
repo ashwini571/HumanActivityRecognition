@@ -158,3 +158,9 @@ print_performance(clf_dt)
 plt.figure(figsize=(20,10))
 #Tree Plot
 tree.plot_tree(clf_dt,class_names=activities,fontsize=6)
+
+#Random Forest
+from sklearn.ensemble import RandomForestClassifier
+clf_rf = RandomForestClassifier(max_depth=10)
+clf_rf.fit(X_train,y_train.values.flatten())
+print_performance(clf_rf)
