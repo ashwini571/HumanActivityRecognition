@@ -164,3 +164,22 @@ from sklearn.ensemble import RandomForestClassifier
 clf_rf = RandomForestClassifier(max_depth=10)
 clf_rf.fit(X_train,y_train.values.flatten())
 print_performance(clf_rf)
+
+
+def plot_model_comparison():
+    model_name = ['Logistic Regression', 'RBF SVM', 'Linear SVM', 'Decision Tree','Random Forest']
+    accuracies = [96.13, 95.04, 96.47, 86.80,92.63]
+    fig, ax = plt.subplots(figsize =(16, 9)) 
+    ax.barh(model_name, accuracies)
+    # Add annotation to bars 
+    for i in ax.patches: 
+        plt.text(i.get_width()+0.2, i.get_y()+0.5,  
+                 str(round((i.get_width()), 2)), 
+                 fontsize = 10, fontweight ='bold', 
+                 color ='grey') 
+    plt.xlabel("Accuracies")
+    plt.ylabel("ML Models")
+    plt.title("Performance Comparison")
+    plt.show()
+
+plot_model_comparison()
